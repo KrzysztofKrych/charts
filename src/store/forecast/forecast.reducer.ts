@@ -3,7 +3,7 @@ import { RootState } from '..'
 
 export interface ForecastInitialState {
   temperature: number[]
-  time: string[]
+  time: number[]
 }
 
 export const initialState: ForecastInitialState = {
@@ -20,7 +20,7 @@ export const forecastSlice = createSlice({
     setTemperature: (state, { payload }: PayloadAction<number[]>) => {
       state.temperature = payload
     },
-    setTime: (state, { payload }: PayloadAction<string[]>) => {
+    setTime: (state, { payload }: PayloadAction<number[]>) => {
       state.time = payload
     },
   },

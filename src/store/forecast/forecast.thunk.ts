@@ -8,7 +8,7 @@ export const setTemperatureThunkAction =
   }
 
 export const setTimeThunkAction =
-  (data: string[]): AppThunk =>
+  (data: number[]): AppThunk =>
   async (dispatch) => {
     dispatch(setTime(data))
   }
