@@ -1,14 +1,9 @@
 import { AppThunk } from '..'
-import { setTemperature, setTime } from './forecast.reducer'
+import { setForecastHourly } from './forecast.reducer'
+import { Forecast } from './interfaces'
 
-export const setTemperatureThunkAction =
-  (data: number[]): AppThunk =>
+export const setForecastThunkAction =
+  (data: Forecast[]): AppThunk =>
   async (dispatch) => {
-    dispatch(setTemperature(data))
-  }
-
-export const setTimeThunkAction =
-  (data: number[]): AppThunk =>
-  async (dispatch) => {
-    dispatch(setTime(data))
+    dispatch(setForecastHourly(data))
   }
