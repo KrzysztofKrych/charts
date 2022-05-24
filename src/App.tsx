@@ -1,17 +1,20 @@
 import { useEffect } from 'react'
-import { useAppDispatch, useAppSelector } from './store'
-import { forecastSelector } from './store/forecast/forecast.reducer'
+import { useAppDispatch } from './store'
 import { ForecastService } from './services/forecast/ForecastService'
+import { CustomLineChart } from './components/elements/LineChart'
 
 function App() {
-  const { temperature } = useAppSelector(forecastSelector)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
     ForecastService.getForecast(dispatch)
   }, [])
 
-  return <div className='App'>test: {temperature.map((num) => num)}</div>
+  return (
+    <div className='App'>
+      <CustomLineChart />
+    </div>
+  )
 }
 
 export default App
