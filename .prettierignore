@@ -1,0 +1,12 @@
+**/dist/**/*
+**/out/**/*
+**/build/**/*
+**/.next/**/*
+**/.serverless_nextjs/**/*
+**/.serverless/**/*
+**/.eslintrc.js
+**/.prettierrc.json
+**/.prettierrc.js
+.serverless
+.webpack
+.husky/**/*
