@@ -1,10 +1,10 @@
 import { combineReducers, configureStore, Action } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import { ThunkAction } from 'redux-thunk'
-import { dataReducer } from './data/data.reducer'
+import { forecastReducer } from './forecast/forecast.reducer'
 
 const rootReducer = combineReducers({
-  dataReducer,
+  forecastReducer,
 })
 
 export const store = configureStore({
