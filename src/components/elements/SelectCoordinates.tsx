@@ -25,6 +25,7 @@ export const SelectCoordinates = () => {
 
   return (
     <StyledFlex width='100%' padding='1rem'>
+      {/*  ADD MAXIMUM AND MINIMUM VALUES */}
       <StyledInput
         type='number'
         onChange={(event) => handleUpdateStateCoordinates({ ...stateCoordinates, lat: Number(event.target.value) })}
@@ -42,7 +43,13 @@ export const SelectCoordinates = () => {
         margin='1rem'
       />
       <StyledSelect margin='1rem' />
-      <StyledButton onClick={handleChangeCoordinates} margin='1rem' background={COLORS.GREEN} color={COLORS.PRIMARY}>
+      <StyledButton
+        disabled={coordinates.lat === stateCoordinates.lat && coordinates.lng === stateCoordinates.lng}
+        onClick={handleChangeCoordinates}
+        margin='1rem'
+        background={COLORS.GREEN}
+        color={COLORS.PRIMARY}
+      >
         Check
       </StyledButton>
       <StyledButton margin='1rem'>Detect your position</StyledButton>
