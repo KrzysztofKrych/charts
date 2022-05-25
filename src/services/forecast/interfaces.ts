@@ -4,3 +4,8 @@ export interface RawForecastResponse {
     time: number[]
   }
 }
+
+export interface Coords {
+  lat: number
+  lng: number
+}
