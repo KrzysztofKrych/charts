@@ -1,14 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '..'
+import { Forecast } from './interfaces'
 
 export interface ForecastInitialState {
-  temperature: number[]
-  time: number[]
+  forecastsHourly: Forecast[]
 }
 
 export const initialState: ForecastInitialState = {
-  temperature: [],
-  time: [],
+  forecastsHourly: [],
 }
 
 const reducerName = 'forecast'
@@ -17,16 +16,13 @@ export const forecastSlice = createSlice({
   name: reducerName,
   initialState,
   reducers: {
-    setTemperature: (state, { payload }: PayloadAction<number[]>) => {
-      state.temperature = payload
-    },
-    setTime: (state, { payload }: PayloadAction<number[]>) => {
-      state.time = payload
+    setForecastHourly: (state, { payload }: PayloadAction<Forecast[]>) => {
+      state.forecastsHourly = payload
     },
   },
 })
 
-export const { setTemperature, setTime } = forecastSlice.actions
+export const { setForecastHourly } = forecastSlice.actions
 
 export const forecastSelector = (state: RootState) => state.forecastReducer
 
