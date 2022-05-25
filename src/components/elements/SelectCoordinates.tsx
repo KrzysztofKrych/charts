@@ -1,4 +1,6 @@
+import { Select } from 'antd'
 import { useEffect, useState } from 'react'
+import { HARDCODED_CITIES } from '../../services/forecast/consts'
 import { ForecastService } from '../../services/forecast/ForecastService'
 import { Coords } from '../../services/forecast/interfaces'
 import { useAppDispatch, useAppSelector } from '../../store'
@@ -15,7 +17,13 @@ export const SelectCoordinates = () => {
     setStateCoordinates(coords)
   }
 
+  const handleChangeSelect = (city: string) => {
+    const hardcodedCity = HARDCODED_CITIES.find((hardcodedCity) => hardcodedCity.label === city)
+    hardcodedCity && handleUpdateStateCoordinates(hardcodedCity) // TODO INFO TO USER IF NOT FOUND
+  }
+
   const handleChangeCoordinates = () => {
+    // TODO SPINNER FOR BUTTON IF DATA IS REQUESTING
     ForecastService.getForecast(dispatch, stateCoordinates)
   }
 
@@ -28,7 +36,9 @@ export const SelectCoordinates = () => {
       {/*  ADD MAXIMUM AND MINIMUM VALUES */}
       <StyledInput
         type='number'
-        onChange={(event) => handleUpdateStateCoordinates({ ...stateCoordinates, lat: Number(event.target.value) })}
+        onChange={(event) =>
+          handleUpdateStateCoordinates({ ...stateCoordinates, lat: Number(event.target.value), label: '' })
+        }
         value={stateCoordinates.lat}
         placeholder='latitude'
         margin='1rem'
@@ -37,12 +47,22 @@ export const SelectCoordinates = () => {
       {/* TODO ADD LABELS TO INPUTS */}
       <StyledInput
         type='number'
-        onChange={(event) => handleUpdateStateCoordinates({ ...stateCoordinates, lng: Number(event.target.value) })}
+        onChange={(event) =>
+          handleUpdateStateCoordinates({ ...stateCoordinates, lng: Number(event.target.value), label: '' })
+        }
         value={stateCoordinates.lng}
         placeholder='longitude'
         margin='1rem'
       />
-      <StyledSelect margin='1rem' />
+      <StyledSelect
+        margin='1rem'
+        value={stateCoordinates.label || 'Choose city'}
+        onChange={(value) => handleChangeSelect(value as string)}
+      >
+        {HARDCODED_CITIES.map((coords) => (
+          <Select.Option key={coords.label}>{coords.label}</Select.Option>
+        ))}
+      </StyledSelect>
       <StyledButton
         disabled={coordinates.lat === stateCoordinates.lat && coordinates.lng === stateCoordinates.lng}
         onClick={handleChangeCoordinates}
