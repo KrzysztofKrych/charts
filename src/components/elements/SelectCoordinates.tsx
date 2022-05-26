@@ -3,10 +3,12 @@ import { useEffect, useState } from 'react'
 import { HARDCODED_CITIES } from '../../services/forecast/consts'
 import { ForecastService } from '../../services/forecast/ForecastService'
 import { Coords } from '../../services/forecast/interfaces'
+import { GeolocationService } from '../../services/geolocation/GeolocationService'
 import { useAppDispatch, useAppSelector } from '../../store'
 import { forecastSelector } from '../../store/forecast/forecast.reducer'
 import { COLORS } from '../../styles/colors'
 import { ParagraphError, StyledButton, StyledFlex, StyledInput, StyledSelect } from '../../styles/styled-components'
+import { DEFAULT_ERROR, GOELOCATION_ERROR } from '../../utils/consts'
 import { LoadingSpinner } from './LoadingSpinner'
 
 export const SelectCoordinates = () => {
@@ -14,19 +16,19 @@ export const SelectCoordinates = () => {
   const dispatch = useAppDispatch()
   const [stateCoordinates, setStateCoordinates] = useState<Coords>(coordinates)
   const [isRequesting, setIsRequesting] = useState<boolean>(false)
-  const [error, setError] = useState<boolean>(false)
+  const [error, setError] = useState<string>('')
 
-  const handleSetError = (isError: boolean) => {
-    setError(isError)
+  const handleSetError = (error: string) => {
+    setError(error)
   }
 
   const handleUpdateStateCoordinates = (coords: Coords) => {
-    handleSetError(false)
+    handleSetError('')
     setStateCoordinates(coords)
   }
 
   const handleChangeSelect = (city: string) => {
-    handleSetError(false)
+    handleSetError('')
     const hardcodedCity = HARDCODED_CITIES.find((hardcodedCity) => hardcodedCity.label === city)
     hardcodedCity && handleUpdateStateCoordinates(hardcodedCity) // TODO INFO TO USER IF NOT FOUND
   }
@@ -34,7 +36,14 @@ export const SelectCoordinates = () => {
   const handleChangeCoordinates = async () => {
     setIsRequesting(true)
     const response = await ForecastService.getForecast(dispatch, stateCoordinates)
-    handleSetError(!response)
+    !response && handleSetError(DEFAULT_ERROR)
+    setIsRequesting(false)
+  }
+
+  const handleDetectUserLocation = async () => {
+    setIsRequesting(true)
+    const response = await GeolocationService.getCustomerLocation(dispatch)
+    !response && handleSetError(GOELOCATION_ERROR)
     setIsRequesting(false)
   }
 
@@ -83,7 +92,7 @@ export const SelectCoordinates = () => {
         </StyledSelect>
         <StyledButton
           disabled={
-            error ||
+            !!error ||
             isRequesting ||
             (coordinates.lat === stateCoordinates.lat && coordinates.lng === stateCoordinates.lng)
           }
@@ -94,11 +103,13 @@ export const SelectCoordinates = () => {
         >
           {isRequesting ? <LoadingSpinner fontSize='1rem' /> : 'Check'}
         </StyledButton>
-        <StyledButton margin='1rem'>Detect your position</StyledButton>
+        <StyledButton onClick={handleDetectUserLocation} margin='1rem'>
+          Detect your position
+        </StyledButton>
       </StyledFlex>
 
       <StyledFlex justifycontent='flex-end' width='100%' padding='0 1rem'>
-        {error && <ParagraphError>Something went wrong. Please try again or change coordinates</ParagraphError>}
+        {error && <ParagraphError>{error}</ParagraphError>}
       </StyledFlex>
     </>
   )
