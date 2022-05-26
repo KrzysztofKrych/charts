@@ -46,3 +46,9 @@ export const StyledButton = styled(Button)<{ color?: string; background?: string
     background: ${(props) => (props.background ? props.background : COLORS.PRIMARY)};
   }
 `
+export const ParagraphError = styled.p<{ color?: string }>`
+  color: ${(props) => (props.color ? props.color : COLORS.RED)};
+  font-size: 11px;
+  margin: 0 0 5px 0;
+  padding: 0;
+`

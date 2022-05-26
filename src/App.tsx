@@ -1,4 +1,4 @@
-import 'antd/dist/antd.css'
+import 'antd/dist/antd.min.css'
 import { useEffect } from 'react'
 import { useAppDispatch } from './store'
 import { ForecastService } from './services/forecast/ForecastService'

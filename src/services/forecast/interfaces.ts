@@ -8,4 +8,5 @@ export interface RawForecastResponse {
 export interface Coords {
   lat: number
   lng: number
+  label: string
 }
