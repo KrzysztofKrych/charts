@@ -2,7 +2,7 @@
   "name": "charts",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://KrzysztofKrych.github.io/charts",
+  "homepage": "http://krzysztofkrych.github.io/charts",
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.1",
     "@testing-library/jest-dom": "^5.14.1",
