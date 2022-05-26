@@ -1,15 +1,16 @@
 import { Select } from 'antd'
 import { useEffect, useState } from 'react'
-import { HARDCODED_CITIES } from '../../services/forecast/consts'
-import { ForecastService } from '../../services/forecast/ForecastService'
-import { Coords } from '../../services/forecast/interfaces'
-import { GeolocationService } from '../../services/geolocation/GeolocationService'
-import { useAppDispatch, useAppSelector } from '../../store'
-import { forecastSelector } from '../../store/forecast/forecast.reducer'
-import { COLORS } from '../../styles/colors'
-import { ParagraphError, StyledButton, StyledFlex, StyledInput, StyledSelect } from '../../styles/styled-components'
-import { DEFAULT_ERROR, GOELOCATION_ERROR } from '../../utils/consts'
-import { LoadingSpinner } from './LoadingSpinner'
+import { isMobile } from 'react-device-detect'
+import { HARDCODED_CITIES } from '../../../services/forecast/consts'
+import { ForecastService } from '../../../services/forecast/ForecastService'
+import { Coords } from '../../../services/forecast/interfaces'
+import { GeolocationService } from '../../../services/geolocation/GeolocationService'
+import { useAppDispatch, useAppSelector } from '../../../store'
+import { forecastSelector } from '../../../store/forecast/forecast.reducer'
+import { COLORS } from '../../../styles/colors'
+import { ParagraphError, StyledButton, StyledFlex, StyledInput, StyledSelect } from '../../../styles/styled-components'
+import { DEFAULT_ERROR, GOELOCATION_ERROR } from '../../../utils/consts'
+import { LoadingSpinner } from '../LoadingSpinner'
 
 export const SelectCoordinates = () => {
   const { coordinates } = useAppSelector(forecastSelector)
@@ -53,8 +54,7 @@ export const SelectCoordinates = () => {
 
   return (
     <>
-      <StyledFlex width='100%' padding='1rem 1rem 0 1rem'>
-        {/*  ADD MAXIMUM AND MINIMUM VALUES */}
+      <StyledFlex width='100%' padding='1rem 1rem 0 1rem' direction={isMobile ? 'column' : 'row'}>
         <StyledInput
           style={{
             border: !Number.isNaN(stateCoordinates.lat) ? '' : `1px solid ${COLORS.RED}`,

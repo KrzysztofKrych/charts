@@ -1,10 +1,10 @@
 import { StyledFlex } from '../../styles/styled-components'
-import { CustomLineChart } from '../elements/LineChart'
-import { SelectCoordinates } from '../elements/SelectCoordinates'
+import { CustomLineChartContainer } from '../elements/LineChart/LineChartContainer'
+import { SelectCoordinates } from '../elements/SelectCoordinates/SelectCoordinates'
 
 export const MainLayout = () => (
   <StyledFlex direction='column' width='100%'>
     <SelectCoordinates />
-    <CustomLineChart />
+    <CustomLineChartContainer />
   </StyledFlex>
 )

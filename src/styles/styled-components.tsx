@@ -1,4 +1,4 @@
-import { Button, Input, Select } from 'antd'
+import { Button, Input, Select, Typography } from 'antd'
 import styled from 'styled-components'
 import { COLORS } from './colors'
 
@@ -51,4 +51,24 @@ export const ParagraphError = styled.p<{ color?: string }>`
   font-size: 11px;
   margin: 0 0 5px 0;
   padding: 0;
+`
+export const StyledText = styled(Typography.Text)<{
+  size: string
+  padding?: string
+  color?: string
+  weight?: string
+  margin?: string
+}>`
+  display: inline-block;
+  font-size: ${(props) => props.size}px;
+  color: ${(props) => (props.color ? props.color : COLORS.WHITE)};
+  font-weight: ${(props) => (props.weight ? props.weight : 400)};
+  margin: ${(props) => (props.margin ? props.margin : '0')};
+  padding: ${(props) => (props.padding ? props.padding : '0')};
+
+  &.ant-typography-disabled {
+    opacity: 0.5;
+    color: ${() => COLORS.GREY};
+    pointer-events: none;
+  }
 `
