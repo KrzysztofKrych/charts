@@ -1,4 +1,4 @@
-By public api you can check weather based on coordinates passed in inputs.
+You can check weather based on coordinates passed in inputs.
 
 I used couple of libraries here -> redux/toolkit, recharts, antd.
 
