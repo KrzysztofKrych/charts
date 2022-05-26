@@ -1,8 +1,8 @@
 import { CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts'
-import { useAppSelector } from '../../store'
-import { forecastSelector } from '../../store/forecast/forecast.reducer'
+import { useAppSelector } from '../../../store'
+import { forecastSelector } from '../../../store/forecast/forecast.reducer'
 
-export const CustomLineChart = () => {
+export const CustomLineChartDesktop = () => {
   const { forecastsHourly } = useAppSelector(forecastSelector)
 
   return (
