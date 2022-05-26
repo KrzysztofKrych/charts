@@ -27,7 +27,7 @@ export const InputLabel = ({
   inputStyle,
   min,
 }: Props) => (
-  <StyledFlex justifycontent='space-between' width='100%' style={style}>
+  <StyledFlex direction='column' justifycontent='space-between' width='100%' style={style}>
     <StyledText padding='0 .5rem 0  0' style={{ whiteSpace: 'nowrap' }} size='16' color={COLORS.PRIMARY}>
       {title}
     </StyledText>

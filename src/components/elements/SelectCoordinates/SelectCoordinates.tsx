@@ -8,9 +8,11 @@ import { GeolocationService } from '../../../services/geolocation/GeolocationSer
 import { useAppDispatch, useAppSelector } from '../../../store'
 import { forecastSelector } from '../../../store/forecast/forecast.reducer'
 import { COLORS } from '../../../styles/colors'
-import { ParagraphError, StyledButton, StyledFlex, StyledInput, StyledSelect } from '../../../styles/styled-components'
+import { ParagraphError, StyledButton, StyledFlex } from '../../../styles/styled-components'
 import { DEFAULT_ERROR, GOELOCATION_ERROR } from '../../../utils/consts'
+import { InputLabel } from '../InputLabel'
 import { LoadingSpinner } from '../LoadingSpinner'
+import { SelectLabel } from '../SelectLabel'
 
 export const SelectCoordinates = () => {
   const { coordinates } = useAppSelector(forecastSelector)
@@ -54,42 +56,45 @@ export const SelectCoordinates = () => {
 
   return (
     <>
-      <StyledFlex width='100%' padding='1rem 1rem 0 1rem' direction={isMobile ? 'column' : 'row'}>
-        <StyledInput
-          style={{
+      <StyledFlex width='100%' padding='1rem 1rem 0 1rem' direction={isMobile ? 'column' : 'row'} alignitems='flex-end'>
+        <InputLabel
+          style={{ padding: '1rem 1rem 0 1rem' }}
+          title='Latitude'
+          inputStyle={{
             border: !Number.isNaN(stateCoordinates.lat) ? '' : `1px solid ${COLORS.RED}`,
+            margin: '1rem',
           }}
-          type='number'
+          inputType='number'
           onChange={(event) =>
             handleUpdateStateCoordinates({ ...stateCoordinates, lat: Number(event.target.value), label: '' })
           }
-          value={stateCoordinates.lat}
+          inputValue={stateCoordinates.lat}
           placeholder='latitude'
-          margin='1rem'
         />
 
-        {/* TODO ADD LABELS TO INPUTS */}
-        <StyledInput
-          style={{
+        <InputLabel
+          style={{ padding: '1rem 1rem 0 1rem' }}
+          title='Longitude'
+          inputStyle={{
             border: !Number.isNaN(stateCoordinates.lng) ? '' : `1px solid ${COLORS.RED}`,
+            margin: '1rem',
           }}
-          type='number'
+          inputType='number'
           onChange={(event) =>
             handleUpdateStateCoordinates({ ...stateCoordinates, lng: Number(event.target.value), label: '' })
           }
-          value={stateCoordinates.lng}
+          inputValue={stateCoordinates.lng}
           placeholder='longitude'
-          margin='1rem'
         />
-        <StyledSelect
-          margin='1rem'
+        <SelectLabel
           value={stateCoordinates.label || 'Choose city'}
-          onChange={(value) => handleChangeSelect(value as string)}
-        >
-          {HARDCODED_CITIES.map((coords) => (
+          onChange={(value: unknown) => handleChangeSelect(value as string)}
+          options={HARDCODED_CITIES.map((coords) => (
             <Select.Option key={coords.label}>{coords.label}</Select.Option>
           ))}
-        </StyledSelect>
+          selectStyle={{ margin: '1rem 1rem 0 1rem' }}
+          title='City'
+        />
         <StyledButton
           disabled={
             !!error ||
