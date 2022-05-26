@@ -13,7 +13,8 @@ export class GeolocationService {
     }
   }
 
-  public static async getCustomerPosition(): Promise<Record<string, { latitude: number; longitude: number }>> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public static async getCustomerPosition(): Promise<Record<string, any>> {
     const fallbackOptions = {
       maximumAge: 1000 * 60 * 3,
       timeout: 1000 * 5,
