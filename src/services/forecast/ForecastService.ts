@@ -7,7 +7,7 @@ import { FORECAST_API_URL } from './consts'
 import { Coords, RawForecastResponse } from './interfaces'
 
 export class ForecastService {
-  public static async getForecast(dispatch: AppDispatch, coords: Coords) {
+  public static async getForecast(dispatch: AppDispatch, coords: Coords): Promise<boolean> {
     const { data } = await axios.get<RawForecastResponse>(
       `${FORECAST_API_URL}?latitude=${coords.lat}&longitude=${coords.lng}&hourly=temperature_2m&timeformat=unixtime`
     )
@@ -22,5 +22,6 @@ export class ForecastService {
         }))
       )
     )
+    return !!data
   }
 }

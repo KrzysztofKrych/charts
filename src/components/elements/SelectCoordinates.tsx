@@ -7,11 +7,13 @@ import { useAppDispatch, useAppSelector } from '../../store'
 import { forecastSelector } from '../../store/forecast/forecast.reducer'
 import { COLORS } from '../../styles/colors'
 import { StyledButton, StyledFlex, StyledInput, StyledSelect } from '../../styles/styled-components'
+import { LoadingSpinner } from './LoadingSpinner'
 
 export const SelectCoordinates = () => {
   const { coordinates } = useAppSelector(forecastSelector)
   const dispatch = useAppDispatch()
   const [stateCoordinates, setStateCoordinates] = useState<Coords>(coordinates)
+  const [isRequesting, setIsRequesting] = useState<boolean>(false)
 
   const handleUpdateStateCoordinates = (coords: Coords) => {
     setStateCoordinates(coords)
@@ -22,9 +24,10 @@ export const SelectCoordinates = () => {
     hardcodedCity && handleUpdateStateCoordinates(hardcodedCity) // TODO INFO TO USER IF NOT FOUND
   }
 
-  const handleChangeCoordinates = () => {
-    // TODO SPINNER FOR BUTTON IF DATA IS REQUESTING
-    ForecastService.getForecast(dispatch, stateCoordinates)
+  const handleChangeCoordinates = async () => {
+    setIsRequesting(true)
+    await ForecastService.getForecast(dispatch, stateCoordinates)
+    setIsRequesting(false)
   }
 
   useEffect(() => {
@@ -64,13 +67,15 @@ export const SelectCoordinates = () => {
         ))}
       </StyledSelect>
       <StyledButton
-        disabled={coordinates.lat === stateCoordinates.lat && coordinates.lng === stateCoordinates.lng}
+        disabled={
+          isRequesting || (coordinates.lat === stateCoordinates.lat && coordinates.lng === stateCoordinates.lng)
+        }
         onClick={handleChangeCoordinates}
         margin='1rem'
         background={COLORS.GREEN}
         color={COLORS.PRIMARY}
       >
-        Check
+        {isRequesting ? <LoadingSpinner fontSize='1rem' /> : 'Check'}
       </StyledButton>
       <StyledButton margin='1rem'>Detect your position</StyledButton>
     </StyledFlex>
