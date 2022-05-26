@@ -24,8 +24,8 @@ const KAIR_COORDS: Coords = {
   label: 'Kair',
 }
 const BUENOS_AIRES_COORDS: Coords = {
-  lat: 34.36,
-  lng: 58.22,
+  lat: -34.36,
+  lng: -58.22,
   label: 'Buenos Aires',
 }
 

@@ -8,20 +8,24 @@ import { Coords, RawForecastResponse } from './interfaces'
 
 export class ForecastService {
   public static async getForecast(dispatch: AppDispatch, coords: Coords): Promise<boolean> {
-    const { data } = await axios.get<RawForecastResponse>(
-      `${FORECAST_API_URL}?latitude=${coords.lat}&longitude=${coords.lng}&hourly=temperature_2m&timeformat=unixtime`
-    )
-
-    dispatch(setCoordinates(coords))
-
-    dispatch(
-      setForecastThunkAction(
-        data.hourly.temperature_2m.map((element, index) => ({
-          temperature: element,
-          time: moment.unix(data.hourly.time[index]).format('MMM Do HH:mm'),
-        }))
+    try {
+      const { data } = await axios.get<RawForecastResponse>(
+        `${FORECAST_API_URL}?latitude=${coords.lat}&longitude=${coords.lng}&hourly=temperature_2m&timeformat=unixtime`
       )
-    )
-    return !!data
+
+      dispatch(setCoordinates(coords))
+
+      dispatch(
+        setForecastThunkAction(
+          data.hourly.temperature_2m.map((element, index) => ({
+            temperature: element,
+            time: moment.unix(data.hourly.time[index]).format('MMM Do HH:mm'),
+          }))
+        )
+      )
+      return !!data
+    } catch (e) {
+      return false
+    }
   }
 }
